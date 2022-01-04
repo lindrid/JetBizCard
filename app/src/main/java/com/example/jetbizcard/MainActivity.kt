@@ -67,7 +67,8 @@ fun CreateJetBizCard() {
                 .width(200.dp)
                 .height(390.dp)
                 .padding(12.dp),
-            shape = RoundedCornerShape(corner = CornerSize(15.dp)),)
+            shape = RoundedCornerShape(corner = CornerSize(15.dp)),
+        )
         {
             Column (
                 verticalArrangement = Arrangement.Top,
@@ -163,9 +164,10 @@ private fun CreateProfileInfo() {
 @Composable
 private fun CreateProfileImage(modifier: Modifier, border: BorderStroke) {
     Surface(
-        modifier = modifier,
+        modifier = modifier,gi
         shape = CircleShape,
-        border = border,)
+        border = border,
+    )
     {
         Image (
             painter = painterResource(id = R.drawable.profile_image),
