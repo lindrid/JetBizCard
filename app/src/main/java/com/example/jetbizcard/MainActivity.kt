@@ -18,7 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetBizCardTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    CreateJetBizCard()
+                    ShowJetBizCard()
                 }
             }
         }
@@ -43,13 +45,13 @@ class MainActivity : ComponentActivity() {
 fun DefaultPreview() {
     JetBizCardTheme {
         Surface(color = MaterialTheme.colors.background) {
-            CreateJetBizCard()
+            ShowJetBizCard()
         }
     }
 }
 
 @Composable
-fun CreateJetBizCard() {
+fun ShowJetBizCard() {
     // A surface container using the 'background' color from the theme
     Surface (
         modifier = Modifier
@@ -75,7 +77,7 @@ fun CreateJetBizCard() {
                 horizontalAlignment = Alignment.CenterHorizontally
             )
             {
-                CreateProfileImage (
+                ShowProfileImage (
                     Modifier
                         .size(150.dp)
                         .padding(12.dp),
@@ -85,7 +87,7 @@ fun CreateJetBizCard() {
                     color = Color.Gray,
                     thickness = 1.dp
                 )
-                CreateProfileInfo()
+                ShowProfileInfo()
                 Button (
                     onClick = {
                         buttonClickedState.value = !buttonClickedState.value
@@ -100,26 +102,31 @@ fun CreateJetBizCard() {
                 }
                 val buttonWasClicked = buttonClickedState.value
                 if (buttonWasClicked) {
-                    PortfolioContent()
+                    ShowPortfolioContent()
                 }
                 else {
-                    Box(){}
+                    HidePortfolioContent()
                 }
             }
         }
     }
 }
 
+@Composable
+fun HidePortfolioContent() {
+    Box{}
+}
+
 @Preview
 @Composable
-fun PortfolioContent() {
+fun ShowPortfolioContent() {
     Surface (
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     )
     {
-        PortfolioList(listOf<String>(
+        ShowPortfolioList(listOf<String>(
             "Project1",
             "Project2",
             "Project3",
@@ -129,20 +136,54 @@ fun PortfolioContent() {
 }
 
 @Composable
-fun PortfolioList(data: List<String>) {
+fun ShowPortfolioList(data: List<String>) {
     LazyColumn (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     )
     {
         items(data) { item ->
-            Text(item)
+            Card (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(13.dp),
+                shape = RoundedCornerShape (
+                    corner = CornerSize(15.dp)
+                ),
+                elevation = 4.dp
+            )
+            {
+                Row (
+                    modifier = Modifier
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    ShowProfileImage (
+                        modifier = Modifier.size(75.dp).padding(5.dp),
+                        border = BorderStroke(2.dp, Color.DarkGray)
+                    )
+                    Column (
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    )
+                    {
+                        Text (
+                            text = item,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text (
+                            text = "An awesome project!",
+                            style = MaterialTheme.typography.body2
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun CreateProfileInfo() {
+private fun ShowProfileInfo() {
     Text(
         "Miles P.",
         modifier = Modifier
@@ -162,9 +203,9 @@ private fun CreateProfileInfo() {
 
 
 @Composable
-private fun CreateProfileImage(modifier: Modifier, border: BorderStroke) {
+private fun ShowProfileImage(modifier: Modifier, border: BorderStroke) {
     Surface(
-        modifier = modifier,gi
+        modifier = modifier,
         shape = CircleShape,
         border = border,
     )
